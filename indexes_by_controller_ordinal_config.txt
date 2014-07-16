@@ -1,0 +1,29 @@
+// indexed by controller ordinal set in config
+// stripPositions[controllerIndex][stripIndex][ports]
+int[][][] stripPositions = {
+	new int[][]{new int[], new int[], new int[], new int[], new int[], new int[], new int[], new int[]},
+	new int[][]{new int[], new int[], new int[], new int[], new int[], new int[], new int[], new int[]},
+	new int[][]{new int[], new int[], new int[], new int[], new int[], new int[], new int[], new int[]},
+	new int[][]{new int[], new int[], new int[], new int[], new int[], new int[], new int[], new int[]},
+	new int[][]{new int[], new int[], new int[], new int[], new int[], new int[], new int[], new int[]},
+	new int[][]{new int[], new int[], new int[], new int[], new int[], new int[], new int[], new int[]},
+	new int[][]{new int[], new int[], new int[], new int[], new int[], new int[], new int[], new int[]},
+	new int[][]{new int[], new int[], new int[], new int[], new int[], new int[], new int[], new int[]},
+	new int[][]{new int[], new int[], new int[], new int[], new int[], new int[], new int[], new int[]},
+	new int[][]{new int[], new int[], new int[], new int[], new int[], new int[], new int[], new int[]}
+};
+
+]// indexed by controller ordinal set in config
+// stripPositions[controllerIndex][stripIndex][tube]
+int[][][] stripPositions = {
+  new int[][]{new int[], new int[], new int[], new int[], new int[], new int[], new int[], new int[]},
+  new int[][]{new int[], new int[], new int[], new int[], new int[], new int[], new int[], new int[]},
+  new int[][]{new int[], new int[], new int[], new int[], new int[], new int[], new int[], new int[]},
+  new int[][]{new int[], new int[], new int[], new int[], new int[], new int[], new int[], new int[]},
+  new int[][]{new int[], new int[], new int[], new int[], new int[], new int[], new int[], new int[]},
+  new int[][]{new int[], new int[], new int[], new int[], new int[], new int[], new int[], new int[]},
+  new int[][]{new int[], new int[], new int[], new int[], new int[], new int[], new int[], new int[]},
+  new int[][]{new int[], new int[], new int[], new int[], new int[], new int[], new int[], new int[]},
+  new int[][]{new int[], new int[], new int[], new int[], new int[], new int[], new int[], new int[]},
+  new int[][]{new int[], new int[], new int[], new int[], new int[], new int[], new int[], new int[]}
+};
