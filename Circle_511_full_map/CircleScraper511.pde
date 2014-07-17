@@ -9,10 +9,19 @@ Author: M. Howell (matthewdhowell@gmail.com)
 int NumLEDs = 256;
 int NumLEDs2 = 255;
 
+
+
+
+
+
 class CircleScraper {
 
   Point[] circleArray;  // array that holds the offsets to each pixel
   Point[] circleArray2; // array that holds the offsets to each pixel
+  
+  
+  int[][] offset;        // pixel offsets for the oversampling
+  float[] coefficient;   // pixel weights for the oversampling
 
   Point  position;    // the scrape location for the center of the circle
   float  scaleX;      // scale factor horizontal
@@ -21,6 +30,8 @@ class CircleScraper {
     circleArray= new Point[NumLEDs];
     circleArray2= new Point[NumLEDs2];
     initCircleArray();
+
+    initSampleArrays();
 
     this.scaleX = scaleY;
     this.position = new Point(x, y);
@@ -50,6 +61,57 @@ class CircleScraper {
     
   }
   
+  void initSampleArrays() {
+      offset = new int[2][9];
+      coefficient = new float[9];
+      
+      offset[0][0] = 0; offset[1][0] = 0;  // this pixel
+      
+      offset[0][1] = -1; offset[1][1] = 0; // to the left
+      offset[0][2] = 1; offset[1][2] = 0; // to the right
+      
+      offset[0][3] = 0; offset[1][3] = -1; // above
+      offset[0][4] = 0; offset[1][4] = 1;  // below
+      
+      offset[0][5] = -1; offset[1][5] = -1; // above and to the left
+      offset[0][6] = -1; offset[1][6] = 1;  // above and to the right
+      
+      offset[0][7] = 1; offset[1][7] = -1;  // below and to the left
+      offset[0][8] = 1; offset[1][8] = 1;   // below and to the right
+      
+      coefficient[0] = 1.2;
+      for (int i=1; i<9; i++)
+        coefficient[i] = 0.8;
+  }
+  
+  int overSample(int x, int y, int[] thisPixels, int thisWidth, int thisHeight) {
+      float red=0, green=0, blue=0;
+      int pixelsCounted = 0;
+      
+      for (int i=0; i<9; i++) {
+        int myX = x+offset[0][i];
+        int myY = y+offset[1][i];
+        
+         if (myX < 0)  // deal with pixels going off the edge.
+            continue;
+         if (myY < 0)
+            continue;
+         if (myX >= thisWidth)
+            continue;  
+         if (myY >= thisHeight)
+            continue;
+         
+         // still here?  ok, so now we need to count a pixel.
+         pixelsCounted++;
+         int mySample = thisPixels[myX + myY * thisWidth];
+         red += red(mySample) * coefficient[i];
+         green += green(mySample) * coefficient[i];
+         blue += blue(mySample) * coefficient[i];
+      }
+      colorMode(RGB, 255);
+      return color(red/pixelsCounted, green/pixelsCounted, blue/pixelsCounted);
+  }
+  
   void scrapeStrip(int boardOffset, Strip s, PImage pi) {
     if((boardOffset > 1) || (boardOffset < 0)) {
       throw new Error("Board Index should be 0 or 1");
@@ -62,7 +124,8 @@ class CircleScraper {
 
     if(boardOffset == 0) {
       for (int i=0; i<NumLEDs; i++) {
-        sample = pi.pixels[((int)circleArray[i].x+ ((int)circleArray[i].y)*pi.width)];
+        //sample = pi.pixels[((int)circleArray[i].x+ ((int)circleArray[i].y)*pi.width)];
+        sample = overSample((int)circleArray[i].x, (int)circleArray[i].y, pi.pixels, pi.width, pi.height);
         s.setPixel(sample, i);
 
 //        if(showScrapePoints == true) {
@@ -73,7 +136,8 @@ class CircleScraper {
       }
     } else {
       for (int i=0; i<NumLEDs2; i++) {
-        sample = pi.pixels[((int)circleArray2[i].x+ ((int)circleArray2[i].y)*pi.width)];
+       // sample = pi.pixels[((int)circleArray2[i].x+ ((int)circleArray2[i].y)*pi.width)];
+        sample = overSample((int)circleArray2[i].x, (int)circleArray2[i].y, pi.pixels, pi.width, pi.height);
         s.setPixel(sample, i);
         //println("("+circleArray2[i].x+","+circleArray2[i].y+")");
 //        if(showScrapePoints == true) {
