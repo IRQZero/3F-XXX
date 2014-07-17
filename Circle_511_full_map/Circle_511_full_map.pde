@@ -1,11 +1,5 @@
-/*
-This software copyright Digital Ambience, 2014.
-This software may not be used for any commercial purpose. 
-The only rights granted are for demonstration of capabilities of the software of Digital Ambience.
-Any use outside of the expressed and written agreements between Digital Ambience and its business associates is a violation of this copyright and good faith between parties. 
-Author: M. Howell (matthewdhowell@gmail.com)
-*/
-
+static final String license = "This Software copyright in equal parts Digital Ambience, Photonic Bliss, Heroic Robot, and IRQ Zero, hereafter refered to as 'The Companies'. This Software may not be used for any commercial purpose by anyone other than The Companies and anyone that is individually licensed by The Companies. The only rights granted to anyone else in legal posession of this Software are for demonstration of capabilities of the software of The Companies unless otherwise licensed. Any use outside of the expressed and written agreements between The Companies and its business associates is a violation of this copyright and good faith between The Companies and third parties.";
+static final String authors = "Matt Howell (misterinterrupt@irqzero.com), Jas Strong (jasmine@heroicrobot.com), Brian Pinkham (brian@photonicbliss.com) Greetz: heroic Robot, IRQ Zero vector mask creation crew, Lumen Lab, 3Form Light Art & 3Form Fabrication Teams, The LED board manufacturers. So Long and thanks for all the fish!";
 import javax.swing.*; 
 import processing.video.*;
 import com.heroicrobot.dropbit.registry.*;
@@ -175,12 +169,14 @@ void initScrapers() {
     // grid increment sizes
     //    float incrementX = 50.0;
     //    float incrementY = 100.0;
+    float dimScaleX = (1000 / moviePlot.width);
+    float dimScaleY = (700 / moviePlot.height);
     float incrementX = moviePlot.width / 20.0;
     float incrementY = moviePlot.height / 7.15470053840299;
     float tubeOffsetX = incrementX;
     float tubeOffsetY = incrementY / 2 + (incrementY/14);
-    float scraperScaleX = 0.0995 * (1000 / moviePlot.height);
-    float scraperScaleY = 0.113 * (700 / moviePlot.height);
+    float scraperScaleX = 0.0995 * dimScaleX;
+    float scraperScaleY = 0.113 * dimScaleY;
     scrapers[k] = new CircleScraper(((tubePositions[k].x-1)*incrementX)+tubeOffsetX, ((tubePositions[k].y-1)*incrementY)+tubeOffsetY, scraperScaleX, scraperScaleY, 0);
   }
 }
