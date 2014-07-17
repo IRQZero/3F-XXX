@@ -110,6 +110,8 @@ class CircleScraper {
       }
       colorMode(RGB, 255);
       return color(red/pixelsCounted, green/pixelsCounted, blue/pixelsCounted);
+//return color((red(thisPixels[(x+offset[0][0]) + (x+offset[1][0]) * thisWidth])+(red/pixelsCounted)),(green(thisPixels[(x+offset[0][0]) + (x+offset[1][0]) * thisWidth])+(green/pixelsCounted)),(blue(thisPixels[(x+offset[0][0]) + (x+offset[1][0]) * thisWidth])+(blue/pixelsCounted)));
+
   }
   
   void scrapeStrip(int boardOffset, Strip s, PImage pi) {

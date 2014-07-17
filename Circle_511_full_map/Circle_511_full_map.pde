@@ -92,6 +92,7 @@ PGraphics moviePlot;
 void setup() {
   size(200, 150, P3D);
   moviePlot = createGraphics(1000, 700, P3D);
+//  moviePlot = createGraphics(1310, 812, P3D);
   registry = new DeviceRegistry();
   registry.setAntiLog(true);
   observer = new PusherObserver();
@@ -178,7 +179,9 @@ void initScrapers() {
     float incrementY = moviePlot.height / 7.15470053840299;
     float tubeOffsetX = incrementX;
     float tubeOffsetY = incrementY / 2 + (incrementY/14);
-    scrapers[k] = new CircleScraper(((tubePositions[k].x-1)*incrementX)+tubeOffsetX, ((tubePositions[k].y-1)*incrementY)+tubeOffsetY, 0.0995, 0.113, 0);
+    float scraperScaleX = 0.0995 * (1000 / moviePlot.height);
+    float scraperScaleY = 0.113 * (700 / moviePlot.height);
+    scrapers[k] = new CircleScraper(((tubePositions[k].x-1)*incrementX)+tubeOffsetX, ((tubePositions[k].y-1)*incrementY)+tubeOffsetY, scraperScaleX, scraperScaleY, 0);
   }
 }
 
