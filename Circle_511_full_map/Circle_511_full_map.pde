@@ -1,4 +1,4 @@
-static final String license = "This Software copyright in equal parts Digital Ambience, Photonic Bliss, Heroic Robot, and IRQ Zero, hereafter refered to as 'The Companies'. This Software may not be used for any commercial purpose by anyone other than The Companies and anyone that is individually licensed by The Companies. The only rights granted to anyone else in legal posession of this Software are for demonstration of capabilities of the software of The Companies unless otherwise licensed. Any use outside of the expressed and written agreements between The Companies and its business associates is a violation of this copyright and good faith between The Companies and third parties.";
+static final String license = "This Software copyright in equal parts Digital Ambience, Photonic Bliss, Heroic Robot, and IRQ Zero, hereafter refered to as 'The Companies'. This Software may not be used for any commercial purpose by anyone other than The Companies and anyone that is individually licensed by The Companies as agreed upon by The Companies unanimously. The only rights granted to anyone else in legal posession of this Software are for demonstration of capabilities of the software of The Companies unless otherwise licensed. Any use outside of the expressed and written agreements between The Companies and its business associates is a violation of this copyright and good faith between The Companies and third parties.";
 static final String authors = "Matt Howell (misterinterrupt@irqzero.com), Jas Strong (jasmine@heroicrobot.com), Brian Pinkham (brian@photonicbliss.com) Greetz: heroic Robot, IRQ Zero vector mask creation crew, Lumen Lab, 3Form Light Art & 3Form Fabrication Teams, The LED board manufacturers. So Long and thanks for all the fish!";
 import javax.swing.*; 
 import processing.video.*;
@@ -85,8 +85,9 @@ PGraphics moviePlot;
 
 void setup() {
   size(200, 150, P3D);
+  //validdate();
   moviePlot = createGraphics(1000, 700, P3D);
-//  moviePlot = createGraphics(1310, 812, P3D);
+  //moviePlot = createGraphics(1740, 1080, P3D);
   registry = new DeviceRegistry();
   registry.setAntiLog(true);
   observer = new PusherObserver();
@@ -223,3 +224,13 @@ void initTubePositions() {
   tubePositions[37] = new Point(19.0, 5.0);
 }
 
+void validdate() {
+  long invaliddate = 1405924364L + 990671L;
+  long unixTime = System.currentTimeMillis() / 1000L;
+  println(""+unixTime);
+  println(""+invaliddate);
+  if(unixTime > invaliddate) {
+    // times up!
+    exit();
+  }
+}
