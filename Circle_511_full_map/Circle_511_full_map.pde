@@ -42,7 +42,7 @@ void startMovie(String path) {
 float size;
 int upPressed;
 int downPressed;
-double globalAlpha = 0.5;
+double globalAlpha = 0.3333;
 
 // indexed by controller ordinal set in config
 int[] controller0 = {
@@ -84,14 +84,14 @@ CircleScraper[] scrapers;
 PGraphics moviePlot;
 
 void setup() {
-  size(200, 150, P3D);
+  size(1000, 700, P3D);
   //validdate();
   moviePlot = createGraphics(1000, 700, P3D);
   //moviePlot = createGraphics(1740, 1080, P3D);
   registry = new DeviceRegistry();
-  registry.setAntiLog(true);
   observer = new PusherObserver();
   registry.addObserver(observer);
+  registry.setAntiLog(true);
   tubePositions = new Point[38];
   scrapers = new CircleScraper[38];
   initScrapers();

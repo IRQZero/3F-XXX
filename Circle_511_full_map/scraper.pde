@@ -4,7 +4,6 @@ void scrape(PImage pi) {
 
   if (observer.hasStrips) {
     registry.startPushing();
-    registry.setAntiLog(true);
     registry.setLogging(false);
     registry.setOverallBrightnessScale(globalAlpha);
     List<Strip> strips = registry.getStrips();
