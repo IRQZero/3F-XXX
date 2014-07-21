@@ -42,7 +42,7 @@ void startMovie(String path) {
 float size;
 int upPressed;
 int downPressed;
-double globalAlpha = 0.3333;
+double globalAlpha = 0.19;
 
 // indexed by controller ordinal set in config
 int[] controller0 = {
@@ -84,8 +84,8 @@ CircleScraper[] scrapers;
 PGraphics moviePlot;
 
 void setup() {
-  size(1000, 700, P3D);
-  //validdate();
+  size(500, 350, P3D);
+  validdate();
   moviePlot = createGraphics(1000, 700, P3D);
   //moviePlot = createGraphics(1740, 1080, P3D);
   registry = new DeviceRegistry();

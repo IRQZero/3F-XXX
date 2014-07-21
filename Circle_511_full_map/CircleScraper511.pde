@@ -66,9 +66,9 @@ class CircleScraper {
       offset[0][7] = 1; offset[1][7] = -1;  // below and to the left
       offset[0][8] = 1; offset[1][8] = 1;   // below and to the right
       
-      coefficient[0] = 1.2;
+      coefficient[0] = 6.0;
       for (int i=1; i<9; i++)
-        coefficient[i] = 0.8;
+        coefficient[i] = 0.37;
   }
   
   int overSample(int x, int y, int[] thisPixels, int thisWidth, int thisHeight) {
