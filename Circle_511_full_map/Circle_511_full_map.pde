@@ -86,6 +86,7 @@ PGraphics moviePlot;
 void setup() {
   size(500, 350, P3D);
   validdate();
+  frameRate(60);
   moviePlot = createGraphics(1000, 700, P3D);
   //moviePlot = createGraphics(1740, 1080, P3D);
   registry = new DeviceRegistry();
