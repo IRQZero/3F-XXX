@@ -95,6 +95,9 @@ void setup() {
   tubePositions = new Point[38];
   scrapers = new CircleScraper[38];
   initScrapers();
+  background(0);
+
+  
 
   //  try { 
   //    UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
@@ -106,13 +109,20 @@ void setup() {
   if(selectCustomFile) {
     selectInput("Select a video:", "fileSelected");
   } else {
-    // gets the user's Desktop dir and playes the file name
+    while (!observer.hasAllStrips) {
+      // wait for the pushers to show up
+    }
+    // now plot black into them
+    moviePlot.beginDraw();
+    moviePlot.background(0);
+    scrape(moviePlot);
+    moviePlot.endDraw(); 
+    // gets the user's Desktop dir and plays the file name
     startMovie(System.getProperty("user.home")+File.separator+animationFilePath); 
   }
 }
 
 void draw() {
-
   if (fileChosen) {
     moviePlot.beginDraw();
     moviePlot.image(myMovie, 0, 0, moviePlot.width, moviePlot.height);
@@ -120,6 +130,11 @@ void draw() {
     scrape(moviePlot);
     moviePlot.endDraw();
     image(moviePlot, 0, 0, width, height);
+  } else {
+    moviePlot.beginDraw();
+    moviePlot.loadPixels();
+    scrape(moviePlot); 
+    moviePlot.endDraw();
   }
 }
 

@@ -2,7 +2,7 @@ void scrape(PImage pi) {
   // scrape for the strips
   loadPixels();
 
-  if (observer.hasStrips) {
+  if (observer.hasAllStrips) {
     registry.startPushing();
     registry.setLogging(false);
     registry.setOverallBrightnessScale(globalAlpha);
@@ -18,13 +18,14 @@ void scrape(PImage pi) {
      * PixelPusher has a method getControllerOrdinal()
      * returns the controller sorting number
      */
-    for (Strip strip : strips) {
-      int stripLength = strip.getLength();
-      int currentStripNumber = strip.getStripNumber();
-      int currentControllerID = strip.getPusher().getControllerOrdinal();      
-      int pos = stripPositions[currentControllerID-1][currentStripNumber];
-      int boardOffset = currentStripNumber % 2;
-      scrapers[pos-1].scrapeStrip(boardOffset, strip, pi);
+    for(Iterator<Strip> it=strips.iterator(); it.hasNext();) {
+         Strip strip = it.next();
+         int stripLength = strip.getLength();
+         int currentStripNumber = strip.getStripNumber();
+         int currentControllerID = strip.getPusher().getControllerOrdinal();      
+         int pos = stripPositions[currentControllerID-1][currentStripNumber];
+         int boardOffset = currentStripNumber % 2;
+         scrapers[pos-1].scrapeStrip(boardOffset, strip, pi);
     }
 
 
