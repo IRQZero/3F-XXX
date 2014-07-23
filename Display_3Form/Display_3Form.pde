@@ -95,6 +95,7 @@ void setup() {
   observer = new PusherObserver();
   registry.addObserver(observer);
   registry.setAntiLog(true);
+  registry.startPushing();
   tubePositions = new Point[38];
   scrapers = new CircleScraper[38];
   initScrapers();
@@ -125,21 +126,21 @@ void setup() {
     moviePlot.background(0);
     moviePlot.endDraw(); 
     dumbScrape();
+    println("Starting the movie");
     // gets the user's Desktop dir and plays the file name
     startMovie(System.getProperty("user.home")+File.separator+animationFilePath); 
+    println("Movie started");
   }
 }
 
 void draw() {
   if (fileChosen) {
-    if (myMovie.available()) {
       moviePlot.beginDraw();
       moviePlot.image(myMovie, 0, 0, moviePlot.width, moviePlot.height);
       moviePlot.loadPixels();
       scrape(moviePlot);
       moviePlot.endDraw();
       image(moviePlot, 0, 0, width, height);
-    }
   } else {
     moviePlot.beginDraw();
     moviePlot.loadPixels();
