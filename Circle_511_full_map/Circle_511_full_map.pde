@@ -35,7 +35,7 @@ void fileSelected(File selection) {
 
 void startMovie(String path) {
   myMovie = new Movie(this, path);
-  myMovie.loop();
+  myMovie.noLoop();
   fileChosen = true;
 }
 
@@ -139,6 +139,13 @@ void draw() {
     scrape(moviePlot); 
     moviePlot.endDraw();
   }
+  
+  if (myMovie.duration <= myMovie.time()) {
+    // the movie has finished
+    Runtime.getRuntime().exec("# some command to start a fresh session");
+    Runtime.getRuntime.exit(0);
+  }
+  
 }
 
 void keyPressed() 
