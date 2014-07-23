@@ -124,12 +124,14 @@ void setup() {
 
 void draw() {
   if (fileChosen) {
-    moviePlot.beginDraw();
-    moviePlot.image(myMovie, 0, 0, moviePlot.width, moviePlot.height);
-    moviePlot.loadPixels();
-    scrape(moviePlot);
-    moviePlot.endDraw();
-    image(moviePlot, 0, 0, width, height);
+    if (myMovie.available()) {
+      moviePlot.beginDraw();
+      moviePlot.image(myMovie, 0, 0, moviePlot.width, moviePlot.height);
+      moviePlot.loadPixels();
+      scrape(moviePlot);
+      moviePlot.endDraw();
+      image(moviePlot, 0, 0, width, height);
+    }
   } else {
     moviePlot.beginDraw();
     moviePlot.loadPixels();
