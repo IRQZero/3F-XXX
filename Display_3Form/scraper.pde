@@ -32,3 +32,14 @@ void scrape(PImage pi) {
   }
   updatePixels();
 }
+
+void dumbScrape() {
+  List<Strip> strips = registry.getStrips();
+  for(Iterator<Strip> it=strips.iterator(); it.hasNext();) {
+         Strip strip = it.next();
+         int stripLength = strip.getLength();
+         for (int i=0; i<stripLength; i++)
+           strip.setPixel(#000000, i);
+         
+  }
+}

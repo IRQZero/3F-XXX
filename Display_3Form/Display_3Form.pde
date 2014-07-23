@@ -113,13 +113,18 @@ void setup() {
     selectInput("Select a video:", "fileSelected");
   } else {
     while (!observer.hasAllStrips) {
-      // wait for the pushers to show up
+      try {
+        dumbScrape();
+        Thread.sleep(1);
+      } catch (InterruptedException ie) {
+         // nothing 
+      }
     }
     // now plot black into them
     moviePlot.beginDraw();
     moviePlot.background(0);
-    scrape(moviePlot);
     moviePlot.endDraw(); 
+    dumbScrape();
     // gets the user's Desktop dir and plays the file name
     startMovie(System.getProperty("user.home")+File.separator+animationFilePath); 
   }
