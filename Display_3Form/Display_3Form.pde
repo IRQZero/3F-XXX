@@ -37,6 +37,7 @@ void fileSelected(File selection) {
 void startMovie(String path) {
   myMovie = new Movie(this, path);
   myMovie.noLoop();
+  myMovie.play();
   fileChosen = true;
 }
 
