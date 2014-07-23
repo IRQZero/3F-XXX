@@ -140,7 +140,7 @@ void draw() {
     moviePlot.endDraw();
   }
   
-  if (myMovie.duration <= myMovie.time()) {
+  if (myMovie.duration() <= myMovie.time()) {
     // the movie has finished
     Runtime.getRuntime().exec("# some command to start a fresh session");
     Runtime.getRuntime.exit(0);
