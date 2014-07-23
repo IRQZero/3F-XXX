@@ -16,6 +16,7 @@ String vidvid;
 boolean fileChosen = false;
 Boolean selectCustomFile = false;
 String animationFilePath = "Desktop/animation.mov";
+String sketchFilePath = "Desktop/Display_3Form.app";
 DeviceRegistry registry;
 PusherObserver observer;
 CircleScraper circleScraper;
@@ -144,9 +145,10 @@ void draw() {
   if (myMovie.duration() <= myMovie.time()) {
     // the movie has finished
     try {
-      Runtime.getRuntime().exec("# some command to start a fresh session");
+      Runtime.getRuntime().exec("open "+System.getProperty("user.home")+File.separator+sketchFilePath);
     } catch (IOException ioe) {
-       // how does one handle this? 
+       // how does one handle this?
+       // myMovie.play() ?
     }
     Runtime.getRuntime().exit(0);
   }
