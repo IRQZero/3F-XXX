@@ -85,8 +85,9 @@ PGraphics moviePlot;
 
 void setup() {
   size(500, 350, P3D);
-  validdate();
   frameRate(60);
+  
+  validdate();
   moviePlot = createGraphics(1000, 700, P3D);
   //moviePlot = createGraphics(1740, 1080, P3D);
   registry = new DeviceRegistry();
@@ -142,8 +143,12 @@ void draw() {
   
   if (myMovie.duration() <= myMovie.time()) {
     // the movie has finished
-    Runtime.getRuntime().exec("# some command to start a fresh session");
-    Runtime.getRuntime.exit(0);
+    try {
+      Runtime.getRuntime().exec("# some command to start a fresh session");
+    } catch (IOException ioe) {
+       // how does one handle this? 
+    }
+    Runtime.getRuntime().exit(0);
   }
   
 }
