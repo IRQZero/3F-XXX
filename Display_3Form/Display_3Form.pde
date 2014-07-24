@@ -152,10 +152,10 @@ void draw() {
   if (myMovie.duration() <= myMovie.time()) {
     // the movie has finished
     try {
-      Runtime.getRuntime().exec("open "+System.getProperty("user.home")+File.separator+sketchFilePath);
+      Runtime.getRuntime().exec("/usr/bin/open "+System.getProperty("user.home")+File.separator+sketchFilePath);
     } catch (IOException ioe) {
-       // how does one handle this?
-       // myMovie.play() ?
+       println(ioe.getMessage());
+       ioe.printStackTrace();
     }
     Runtime.getRuntime().exit(0);
   }
