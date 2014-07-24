@@ -8,6 +8,7 @@ import java.util.*;
 import processing.core.*;
 
 boolean loopMode = true;
+boolean newFrame = false;
 
 /*
   The animation to be mapped must be in the user's Desktop folder and must be named "animation.mov".
@@ -143,12 +144,15 @@ void setup() {
 
 void draw() {
   if (fileChosen) {
-      moviePlot.beginDraw();
-      moviePlot.image(myMovie, 0, 0, moviePlot.width, moviePlot.height);
-      moviePlot.loadPixels();
-      scrape(moviePlot);
-      moviePlot.endDraw();
-      image(moviePlot, 0, 0, width, height);
+      if (newFrame) {
+        moviePlot.beginDraw();
+        moviePlot.image(myMovie, 0, 0, moviePlot.width, moviePlot.height);
+        moviePlot.loadPixels();
+        scrape(moviePlot);
+        moviePlot.endDraw();
+        image(moviePlot, 0, 0, width, height);
+        newFrame = false;
+      }
   } else {
     moviePlot.beginDraw();
     moviePlot.loadPixels();
@@ -202,6 +206,7 @@ void keyPressed()
 
 void movieEvent(Movie m) {
   m.read();
+  newFrame = true;
 }
 
 void initScrapers() {
