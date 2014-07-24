@@ -7,8 +7,13 @@ import com.heroicrobot.dropbit.devices.pixelpusher.*;
 import java.util.*;
 import processing.core.*;
 
-boolean loopMode = true;
-boolean newFrame = false;
+boolean loopMode = true;          // play video looping
+boolean periodicRestart = true;   // restart periodically if looping
+
+int restartAfter = 60 * 60;       // for periodic restart: in seconds.
+
+boolean newFrame = false;         // did the movie get a new frame?
+int timeStarted = 0;              // we started the movie at this time
 
 /*
   The animation to be mapped must be in the user's Desktop folder and must be named "animation.mov".
@@ -39,6 +44,7 @@ void fileSelected(File selection) {
 
 void startMovie(String path) {
   myMovie = new Movie(this, path);
+  timeStarted = System.currentTimeMillis() / 1000L;
   dumbScrape();
   if (loopMode) {
     myMovie.loop();
@@ -96,6 +102,8 @@ PGraphics moviePlot;
 void setup() {
   size(500, 350, P3D);
   frameRate(60);
+  
+  timeStarted = System.currentTimeMillis() / 1000L;  // stop the restart from firing early
   
   validdate();
   moviePlot = createGraphics(1000, 700, P3D);
@@ -160,8 +168,10 @@ void draw() {
     moviePlot.endDraw();
   }
   
-  if (!loopMode) {
-    if (myMovie.duration() <= myMovie.time()) {
+  int timeNow = System.currentTimeMillis() / 1000L;
+  
+  if ((!loopMode) || periodicRestart) {
+    if ((myMovie.duration() <= myMovie.time()) || (timeStarted + restartAfter <= timeNow)) {
       // the movie has finished
         try {
           Runtime.getRuntime().exec("/usr/bin/open "+System.getProperty("user.home")+File.separator+sketchFilePath);

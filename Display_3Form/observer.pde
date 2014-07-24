@@ -7,7 +7,7 @@ class PusherObserver implements Observer {
       //println("Device change: " + updatedDevice);
     }
     this.hasStrips = true;
-    if ( ((DeviceRegistry)registry).getPushers().size() >= 1) {
+    if ( ((DeviceRegistry)registry).getPushers().size() >= 10) {
        this.hasAllStrips = true; 
     } else {
       this.hasAllStrips = false;
