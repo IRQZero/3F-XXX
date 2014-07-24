@@ -7,6 +7,8 @@ import com.heroicrobot.dropbit.devices.pixelpusher.*;
 import java.util.*;
 import processing.core.*;
 
+boolean loopMode = true;
+
 /*
   The animation to be mapped must be in the user's Desktop folder and must be named "animation.mov".
 */
@@ -37,7 +39,11 @@ void fileSelected(File selection) {
 void startMovie(String path) {
   myMovie = new Movie(this, path);
   dumbScrape();
-  myMovie.noLoop();
+  if (loopMode) {
+    myMovie.loop();
+  } else {
+    myMovie.noLoop();
+  }
   myMovie.play();
   fileChosen = true;
 }
@@ -150,17 +156,18 @@ void draw() {
     moviePlot.endDraw();
   }
   
-  if (myMovie.duration() <= myMovie.time()) {
-    // the movie has finished
-    try {
-      Runtime.getRuntime().exec("/usr/bin/open "+System.getProperty("user.home")+File.separator+sketchFilePath);
-    } catch (IOException ioe) {
-       println(ioe.getMessage());
-       ioe.printStackTrace();
+  if (!loopMode) {
+    if (myMovie.duration() <= myMovie.time()) {
+      // the movie has finished
+        try {
+          Runtime.getRuntime().exec("/usr/bin/open "+System.getProperty("user.home")+File.separator+sketchFilePath);
+        } catch (IOException ioe) {
+         println(ioe.getMessage());
+         ioe.printStackTrace();
+      }
+      Runtime.getRuntime().exit(0);
     }
-    Runtime.getRuntime().exit(0);
   }
-  
 }
 
 void keyPressed() 
