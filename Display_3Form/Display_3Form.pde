@@ -13,7 +13,7 @@ boolean periodicRestart = true;   // restart periodically if looping
 int restartAfter = 60 * 60;       // for periodic restart: in seconds.
 
 boolean newFrame = false;         // did the movie get a new frame?
-int timeStarted = 0;              // we started the movie at this time
+long timeStarted = 0;              // we started the movie at this time
 
 /*
   The animation to be mapped must be in the user's Desktop folder and must be named "animation.mov".
@@ -168,10 +168,15 @@ void draw() {
     moviePlot.endDraw();
   }
   
-  int timeNow = System.currentTimeMillis() / 1000L;
+  long timeNow = System.currentTimeMillis() / 1000L;
   
   if ((!loopMode) || periodicRestart) {
     if ((myMovie.duration() <= myMovie.time()) || (timeStarted + restartAfter <= timeNow)) {
+      if (periodicRestart) {
+         // must let the movie play to the end
+         if ( myMovie.duration() > myMovie.time())
+           return;
+      }
       // the movie has finished
         try {
           Runtime.getRuntime().exec("/usr/bin/open "+System.getProperty("user.home")+File.separator+sketchFilePath);
