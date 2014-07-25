@@ -6,11 +6,11 @@ import com.heroicrobot.dropbit.registry.*;
 import com.heroicrobot.dropbit.devices.pixelpusher.*;
 import java.util.*;
 import processing.core.*;
-
+import codeanticode.syphon.*;
 
 boolean loopMode = true;          // play video looping
 boolean periodicRestart = false;   // restart periodically if looping
-
+boolean usingSyphon = true;
 int restartAfter = 60 * 60;       // for periodic restart: in seconds.
 int minimumPushers = 10;
 boolean newFrame = false;         // did the movie get a new frame?
@@ -33,6 +33,7 @@ String restartCommand = "/usr/bin/open " + homeDir + File.separator + sketchFile
 DeviceRegistry registry;
 PusherObserver observer;
 CircleScraper circleScraper;
+SyphonClient client;
 //int testPixel = 0;
 //boolean showScrapePoints = false;
 
@@ -110,7 +111,7 @@ void setup() {
   
   timeStarted = System.currentTimeMillis() / 1000L;  // stop the restart from firing early
   
-  validdate();
+  //validdate();
   moviePlot = createGraphics(1000, 700, P3D);
   //moviePlot = createGraphics(1740, 1080, P3D);
   registry = new DeviceRegistry();
@@ -118,6 +119,7 @@ void setup() {
   registry.addObserver(observer);
   registry.setAntiLog(true);
   registry.startPushing();
+  client = new SyphonClient(this);
   tubePositions = new Point[38];
   scrapers = new CircleScraper[38];
   initScrapers();
@@ -159,7 +161,11 @@ void draw() {
   if (fileChosen) {
       if (newFrame) {
         moviePlot.beginDraw();
-        moviePlot.image(myMovie, 0, 0, moviePlot.width, moviePlot.height);
+        if(usingSyphon && client.available()) {
+          moviePlot = client.getGraphics(moviePlot);
+        } else if(!usingSyphon) {
+          moviePlot.image(myMovie, 0, 0, moviePlot.width, moviePlot.height);
+        }
         moviePlot.loadPixels();
         scrape(moviePlot);
         moviePlot.endDraw();
