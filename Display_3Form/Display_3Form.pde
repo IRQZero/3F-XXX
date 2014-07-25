@@ -7,11 +7,12 @@ import com.heroicrobot.dropbit.devices.pixelpusher.*;
 import java.util.*;
 import processing.core.*;
 
+
 boolean loopMode = true;          // play video looping
-boolean periodicRestart = true;   // restart periodically if looping
+boolean periodicRestart = false;   // restart periodically if looping
 
 int restartAfter = 60 * 60;       // for periodic restart: in seconds.
-
+int minimumPushers = 10;
 boolean newFrame = false;         // did the movie get a new frame?
 long timeStarted = 0;              // we started the movie at this time
 
@@ -23,8 +24,12 @@ Movie myMovie;
 String vidvid;
 boolean fileChosen = false;
 Boolean selectCustomFile = false;
+String homeDir = System.getProperty("user.home");
 String animationFilePath = "Desktop/animation.mov";
-String sketchFilePath = "Desktop/Display_3Form.app";
+String sketchFilePath = "Desktop/3Form_Display.app/Contents/MacOS/Display_3Form";
+String logFilePath = "Desktop/display_log.txt";
+String redirectCommand = " 2> " + homeDir + File.separator + logFilePath + " 1>2";
+String restartCommand = "/usr/bin/open " + homeDir + File.separator + sketchFilePath + redirectCommand;
 DeviceRegistry registry;
 PusherObserver observer;
 CircleScraper circleScraper;
@@ -100,7 +105,7 @@ CircleScraper[] scrapers;
 PGraphics moviePlot;
 
 void setup() {
-  size(500, 350, P3D);
+  size(250, 175, P3D);
   frameRate(60);
   
   timeStarted = System.currentTimeMillis() / 1000L;  // stop the restart from firing early
@@ -145,7 +150,7 @@ void setup() {
     dumbScrape();
     println("Starting the movie");
     // gets the user's Desktop dir and plays the file name
-    startMovie(System.getProperty("user.home")+File.separator+animationFilePath); 
+    startMovie(homeDir+File.separator+animationFilePath); 
     println("Movie started");
   }
 }
@@ -179,7 +184,7 @@ void draw() {
       }
       // the movie has finished
         try {
-          Runtime.getRuntime().exec("/usr/bin/open "+System.getProperty("user.home")+File.separator+sketchFilePath);
+          Runtime.getRuntime().exec(restartCommand);
         } catch (IOException ioe) {
          println(ioe.getMessage());
          ioe.printStackTrace();
